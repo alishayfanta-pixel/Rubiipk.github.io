@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rubii.pk</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&display=swap" rel="stylesheet">
+
+<style>
+body {
+    margin: 0;
+    font-family: 'Fredoka', sans-serif;
+    background: #fff;
+}
+
+/* HEADER */
+header {
+    text-align: center;
+    padding: 20px;
+    position: relative;
+}
+
+.brand {
+    font-size: 42px;
+    color: #a8d8ff;
+}
+
+/* Categories */
+.categories {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    color: grey;
+    font-size: 18px;
+    margin-top: 10px;
+}
+
+.categories span {
+    cursor: pointer;
+}
+
+/* TEDDY (Enhanced 3D look) */
+.teddy {
+    position: absolute;
+    right: 20px;
+    top: 10px;
+    width: 60px;
+    height: 60px;
+}
+
+.teddy div {
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 30% 30%, #fff, #d6a77a);
+    border-radius: 50%;
+    position: relative;
+    box-shadow: 0 10px 15px rgba(0,0,0,0.2);
+    animation: float 3s ease-in-out infinite;
+}
+
+.teddy div::before, .teddy div::after {
+    content: "";
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background: #d6a77a;
+    border-radius: 50%;
+    top: -10px;
+}
+
+.teddy div::before { left: 5px; }
+.teddy div::after { right: 5px; }
+
+@keyframes float {
+    0%,100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+}
+
+/* PRODUCTS */
+.products {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 20px;
+    padding: 20px;
+}
+
+.product {
+    border: 1px solid #eee;
+    padding: 10px;
+    border-radius: 10px;
+    text-align: center;
+    transition: 0.3s;
+}
+
+.product:hover {
+    transform: translateY(-5px);
+}
+
+.product img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+}
+
+/* Buttons */
+button {
+    margin-top: 5px;
+    padding: 8px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.cart-btn { background: #ddd; }
+.order-btn { background: #25D366; color: white; }
+
+/* CART */
+.cart {
+    position: fixed;
+    bottom: 10px;
+    left: 10px;
+    background: white;
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    width: 200px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="brand">Rubii.pk</div>
+
+    <div class="teddy"><div></div></div>
+
+    <div class="categories">
+        <span onclick="filterCategory('all')">All</span>
+        <span onclick="filterCategory('bracelet')">Bracelets</span>
+        <span onclick="filterCategory('necklace')">Necklaces</span>
+        <span onclick="filterCategory('trinket')">Trinkets</span>
+    </div>
+</header>
+
+<!-- PRODUCTS -->
+<div class="products" id="product-list"></div>
+
+<!-- CART -->
+<div class="cart">
+    <h4>Cart</h4>
+    <ul id="cart-list"></ul>
+    <button onclick="orderCart()">Order All</button>
+</div>
+
+<script>
+const products = [
+    {name: "Bracelet 1", price: 500, category: "bracelet", img: "YOUR_IMAGE"},
+    {name: "Necklace 1", price: 800, category: "necklace", img: "YOUR_IMAGE"},
+    {name: "Trinket 1", price: 300, category: "trinket", img: "YOUR_IMAGE"},
+    {name: "Bracelet 2", price: 600, category: "bracelet", img: "YOUR_IMAGE"}
+];
+
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+function displayProducts(filter = "all") {
+    const container = document.getElementById("product-list");
+    container.innerHTML = "";
+
+    products
+        .filter(p => filter === "all" || p.category === filter)
+        .forEach(p => {
+            container.innerHTML += `
+            <div class="product">
+                <img src="${p.img}">
+                <h4>${p.name}</h4>
+                <p>Rs. ${p.price}</p>
+                <button class="cart-btn" onclick="addToCart('${p.name}')">Add to Cart</button>
+                <button class="order-btn" onclick="orderNow('${p.name}')">Order</button>
+            </div>`;
+        });
+}
+
+function filterCategory(cat) {
+    displayProducts(cat);
+}
+
+function addToCart(item) {
+    cart.push(item);
+    localStorage.setItem("cart", JSON.stringify(cart));
+    displayCart();
+}
+
+function displayCart() {
+    const list = document.getElementById("cart-list");
+    list.innerHTML = "";
+    cart.forEach(item => {
+        let li = document.createElement("li");
+        li.textContent = item;
+        list.appendChild(li);
+    });
+}
+
+function orderNow(item) {
+    let number = "923407203287";
+    let text = encodeURIComponent("I want to order: " + item);
+    window.open(`https://wa.me/${number}?text=${text}`);
+}
+
+function orderCart() {
+    let number = "923407203287";
+    let text = encodeURIComponent("I want to order: " + cart.join(", "));
+    window.open(`https://wa.me/${number}?text=${text}`);
+}
+
+displayProducts();
+displayCart();
+</script>
+
+</body>
+</html>
