@@ -1,222 +1,360 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Rubii.pk</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Rubii.pk</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&display=swap" rel="stylesheet">
+  <!-- Fredoka One font for bubbly logo -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap"
+    rel="stylesheet"
+  />
 
-<style>
-body {
-    margin: 0;
-    font-family: 'Fredoka', sans-serif;
-    background: #fff;
-}
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Fredoka One', cursive;
+      background: #fff;
+    }
 
-/* HEADER */
-header {
-    text-align: center;
-    padding: 20px;
-    position: relative;
-}
+    /* BRAND NAME */
+    .brand {
+      font-family: 'Fredoka One', cursive;
+      font-size: 42px;
+      color: #a8d8ff; /* pastel blue */
+      text-align: center;
+      margin: 20px 0 10px 0;
+      position: relative;
+    }
 
-.brand {
-    font-size: 42px;
-    color: #a8d8ff;
-}
+    /* TEDDY ANIMATION */
+    .teddy {
+      position: absolute;
+      right: 20px;
+      top: 20px;
+      width: 60px;
+      height: 60px;
+    }
 
-/* Categories */
-.categories {
-    display: flex;
-    justify-content: center;
-    gap: 30px;
-    color: grey;
-    font-size: 18px;
-    margin-top: 10px;
-}
+    .teddy div {
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at 30% 30%, #fff, #d6a77a);
+      border-radius: 50%;
+      position: relative;
+      box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2);
+      animation: float 3s ease-in-out infinite;
+    }
 
-.categories span {
-    cursor: pointer;
-}
+    .teddy div::before,
+    .teddy div::after {
+      content: '';
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: #d6a77a;
+      border-radius: 50%;
+      top: -10px;
+    }
 
-/* TEDDY (Enhanced 3D look) */
-.teddy {
-    position: absolute;
-    right: 20px;
-    top: 10px;
-    width: 60px;
-    height: 60px;
-}
+    .teddy div::before {
+      left: 5px;
+    }
 
-.teddy div {
-    width: 100%;
-    height: 100%;
-    background: radial-gradient(circle at 30% 30%, #fff, #d6a77a);
-    border-radius: 50%;
-    position: relative;
-    box-shadow: 0 10px 15px rgba(0,0,0,0.2);
-    animation: float 3s ease-in-out infinite;
-}
+    .teddy div::after {
+      right: 5px;
+    }
 
-.teddy div::before, .teddy div::after {
-    content: "";
-    position: absolute;
-    width: 20px;
-    height: 20px;
-    background: #d6a77a;
-    border-radius: 50%;
-    top: -10px;
-}
+    @keyframes float {
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-8px);
+      }
+    }
 
-.teddy div::before { left: 5px; }
-.teddy div::after { right: 5px; }
+    /* HEADER & CATEGORIES */
+    header {
+      position: relative;
+      text-align: center;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #eee;
+    }
 
-@keyframes float {
-    0%,100% { transform: translateY(0); }
-    50% { transform: translateY(-8px); }
-}
+    .categories {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      color: grey;
+      font-size: 18px;
+      margin-top: 10px;
+      flex-wrap: wrap;
+      user-select: none;
+    }
 
-/* PRODUCTS */
-.products {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-    gap: 20px;
-    padding: 20px;
-}
+    .categories span {
+      cursor: pointer;
+      transition: color 0.3s ease;
+    }
 
-.product {
-    border: 1px solid #eee;
-    padding: 10px;
-    border-radius: 10px;
-    text-align: center;
-    transition: 0.3s;
-}
+    .categories span:hover,
+    .categories span.active {
+      color: #a8d8ff; /* pastel blue highlight */
+      font-weight: 600;
+    }
 
-.product:hover {
-    transform: translateY(-5px);
-}
+    /* PRODUCTS GRID */
+    .products {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      gap: 10px;
+      padding: 20px;
+    }
 
-.product img {
-    width: 100%;
-    height: 150px;
-    object-fit: cover;
-}
+    .product {
+      text-align: center;
+    }
 
-/* Buttons */
-button {
-    margin-top: 5px;
-    padding: 8px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
+    .product img {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      object-fit: cover;
+      border-radius: 10px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease;
+      cursor: pointer;
+    }
 
-.cart-btn { background: #ddd; }
-.order-btn { background: #25D366; color: white; }
+    .product img:hover {
+      transform: scale(1.05);
+    }
 
-/* CART */
-.cart {
-    position: fixed;
-    bottom: 10px;
-    left: 10px;
-    background: white;
-    padding: 10px;
-    border-radius: 10px;
-    border: 1px solid #ccc;
-    width: 200px;
-}
-</style>
+    .product h4 {
+      margin: 8px 0 4px 0;
+      font-weight: 600;
+      font-size: 1.1rem;
+      color: #333;
+    }
+
+    .product p {
+      margin: 0 0 6px 0;
+      color: #666;
+      font-weight: 500;
+    }
+
+    /* BUTTONS */
+    button {
+      margin: 3px 4px;
+      padding: 8px 12px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 0.9rem;
+      transition: background-color 0.3s ease;
+    }
+
+    .cart-btn {
+      background: #ddd;
+      color: #333;
+    }
+
+    .cart-btn:hover {
+      background: #bbb;
+    }
+
+    .order-btn {
+      background: #25d366;
+      color: white;
+    }
+
+    .order-btn:hover {
+      background: #1ebe5a;
+    }
+
+    /* CART */
+    .cart {
+      position: fixed;
+      bottom: 10px;
+      left: 10px;
+      background: white;
+      padding: 15px 20px;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+      width: 220px;
+      max-height: 300px;
+      overflow-y: auto;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      font-family: Arial, sans-serif;
+      font-weight: 500;
+      font-size: 0.9rem;
+      z-index: 1000;
+    }
+
+    .cart h4 {
+      margin: 0 0 10px 0;
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: #25d366;
+    }
+
+    #cart-list {
+      list-style: none;
+      padding-left: 0;
+      margin: 0 0 10px 0;
+    }
+
+    #cart-list li {
+      padding: 4px 0;
+      border-bottom: 1px solid #eee;
+    }
+
+    #cart-list li:last-child {
+      border-bottom: none;
+    }
+
+    /* Responsive tweak */
+    @media (max-width: 600px) {
+      .products {
+        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+      }
+      .cart {
+        width: 90%;
+        left: 5%;
+        bottom: 5%;
+      }
+      .teddy {
+        width: 50px;
+        height: 50px;
+        right: 10px;
+        top: 10px;
+      }
+      .brand {
+        font-size: 36px;
+      }
+    }
+  </style>
 </head>
-
 <body>
-
-<header>
+  <header>
     <div class="brand">Rubii.pk</div>
-
     <div class="teddy"><div></div></div>
 
     <div class="categories">
-        <span onclick="filterCategory('all')">All</span>
-        <span onclick="filterCategory('bracelet')">Bracelets</span>
-        <span onclick="filterCategory('necklace')">Necklaces</span>
-        <span onclick="filterCategory('trinket')">Trinkets</span>
+      <span class="active" onclick="filterCategory('all')">All</span>
+      <span onclick="filterCategory('bracelet')">Bracelets</span>
+      <span onclick="filterCategory('necklace')">Necklaces</span>
+      <span onclick="filterCategory('trinket')">Trinkets</span>
     </div>
-</header>
+  </header>
 
-<!-- PRODUCTS -->
-<div class="products" id="product-list"></div>
+  <div class="products" id="product-list"></div>
 
-<!-- CART -->
-<div class="cart">
+  <div class="cart">
     <h4>Cart</h4>
     <ul id="cart-list"></ul>
     <button onclick="orderCart()">Order All</button>
-</div>
+  </div>
 
-<script>
-const products = [
-    {name: "Bracelet 1", price: 500, category: "bracelet", img: "YOUR_IMAGE"},
-    {name: "Necklace 1", price: 800, category: "necklace", img: "YOUR_IMAGE"},
-    {name: "Trinket 1", price: 300, category: "trinket", img: "YOUR_IMAGE"},
-    {name: "Bracelet 2", price: 600, category: "bracelet", img: "YOUR_IMAGE"}
-];
+  <script>
+    const products = [
+      {
+        name: 'Bracelet 1',
+        price: 500,
+        category: 'bracelet',
+        img: 'YOUR_IMAGE_LINK_HERE'
+      },
+      {
+        name: 'Necklace 1',
+        price: 800,
+        category: 'necklace',
+        img: 'YOUR_IMAGE_LINK_HERE'
+      },
+      {
+        name: 'Trinket 1',
+        price: 300,
+        category: 'trinket',
+        img: 'YOUR_IMAGE_LINK_HERE'
+      },
+      {
+        name: 'Bracelet 2',
+        price: 600,
+        category: 'bracelet',
+        img: 'YOUR_IMAGE_LINK_HERE'
+      }
+      // Add more products here
+    ];
 
-let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
-function displayProducts(filter = "all") {
-    const container = document.getElementById("product-list");
-    container.innerHTML = "";
+    function displayProducts(filter = 'all') {
+      const container = document.getElementById('product-list');
+      container.innerHTML = '';
 
-    products
-        .filter(p => filter === "all" || p.category === filter)
+      products
+        .filter(p => filter === 'all' || p.category === filter)
         .forEach(p => {
-            container.innerHTML += `
+          container.innerHTML += `
             <div class="product">
-                <img src="${p.img}">
-                <h4>${p.name}</h4>
-                <p>Rs. ${p.price}</p>
-                <button class="cart-btn" onclick="addToCart('${p.name}')">Add to Cart</button>
-                <button class="order-btn" onclick="orderNow('${p.name}')">Order</button>
-            </div>`;
+              <img src="${p.img}" alt="${p.name}" />
+              <h4>${p.name}</h4>
+              <p>Rs. ${p.price}</p>
+              <button class="cart-btn" onclick="addToCart('${p.name}')">Add to Cart</button>
+              <button class="order-btn" onclick="orderNow('${p.name}')">Order</button>
+            </div>
+          `;
         });
-}
+      updateActiveCategory(filter);
+    }
 
-function filterCategory(cat) {
-    displayProducts(cat);
-}
+    function updateActiveCategory(selected) {
+      document.querySelectorAll('.categories span').forEach(span => {
+        span.classList.toggle('active', span.textContent.toLowerCase() === selected);
+      });
+    }
 
-function addToCart(item) {
-    cart.push(item);
-    localStorage.setItem("cart", JSON.stringify(cart));
-    displayCart();
-}
+    function filterCategory(cat) {
+      displayProducts(cat);
+    }
 
-function displayCart() {
-    const list = document.getElementById("cart-list");
-    list.innerHTML = "";
-    cart.forEach(item => {
-        let li = document.createElement("li");
+    function addToCart(item) {
+      cart.push(item);
+      localStorage.setItem('cart', JSON.stringify(cart));
+      displayCart();
+    }
+
+    function displayCart() {
+      const list = document.getElementById('cart-list');
+      list.innerHTML = '';
+      cart.forEach((item, i) => {
+        const li = document.createElement('li');
         li.textContent = item;
         list.appendChild(li);
-    });
-}
+      });
+    }
 
-function orderNow(item) {
-    let number = "923407203287";
-    let text = encodeURIComponent("I want to order: " + item);
-    window.open(`https://wa.me/${number}?text=${text}`);
-}
+    function orderNow(item) {
+      const number = '923407203287';
+      const text = encodeURIComponent('I want to order: ' + item);
+      window.open(`https://wa.me/${number}?text=${text}`);
+    }
 
-function orderCart() {
-    let number = "923407203287";
-    let text = encodeURIComponent("I want to order: " + cart.join(", "));
-    window.open(`https://wa.me/${number}?text=${text}`);
-}
+    function orderCart() {
+      if (cart.length === 0) {
+        alert('Your cart is empty!');
+        return;
+      }
+      const number = '923407203287';
+      const text = encodeURIComponent('I want to order: ' + cart.join(', '));
+      window.open(`https://wa.me/${number}?text=${text}`);
+    }
 
-displayProducts();
-displayCart();
-</script>
-
+    // Initial load
+    displayProducts();
+    displayCart();
+  </script>
 </body>
 </html>
